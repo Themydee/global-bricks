@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Facebook, Linkedin, MessageCircle, Instagram } from 'lucide-react';
+import Logo from '../../assets/red_brick_logo.png'
 
 const Footer = () => {
   const quickLinks = [
@@ -27,9 +28,8 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-brick rounded-lg flex items-center justify-center">
-                <div className="w-7 h-7 bg-primary-foreground rounded-sm"></div>
-              </div>
+                         <img className='w-10 h-10 ' src={Logo} alt="" />
+             
               <div>
                 <h3 className="text-xl font-bold text-primary-foreground">Global Red Bricks</h3>
                 <p className="text-sm text-secondary-light">Building Excellence</p>
