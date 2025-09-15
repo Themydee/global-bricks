@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import Logo from '../../assets/red_brick_logo.png'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,9 +25,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-brick rounded-lg flex items-center justify-center">
-              <div className="w-6 h-6 bg-primary-foreground rounded-sm"></div>
-            </div>
+            <img src="" alt="" />
             <div>
               <h2 className="text-xl font-bold text-gradient-brick">Global Red Bricks</h2>
               <p className="text-xs text-muted-foreground">Building Excellence</p>

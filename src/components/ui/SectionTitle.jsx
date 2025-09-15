@@ -13,7 +13,7 @@ const SectionTitle = ({
           {subtitle}
         </p>
       )}
-      <h2 className={`heading-lg ${gradient ? 'text-gradient-brick' : 'text-foreground'} mb-4`}>
+      <h2 className={`heading-lg ${gradient ? 'text-gradient-brick' : ''} mb-4`}>
         {title}
       </h2>
       {description && (

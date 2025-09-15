@@ -7,12 +7,12 @@ import brickMachine from '../assets/brick-machine.jpg';
 const About = () => {
   const teamMembers = [
     {
-      name: 'John Adebayo',
+      name: 'John Doe',
       role: 'Chief Executive Officer',
       experience: '15+ years in construction',
     },
     {
-      name: 'Sarah Johnson',
+      name: 'Sarah Banks',
       role: 'Technical Director',
       experience: '12+ years in engineering',
     },
