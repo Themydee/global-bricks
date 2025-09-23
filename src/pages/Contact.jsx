@@ -30,8 +30,8 @@ const Contact = () => {
     {
       icon: Phone,
       title: 'Phone Number',
-      details: '+234 123 456 7890',
-      link: 'tel:+2341234567890',
+      details: '+2348037321144',
+      link: 'tel:+2348037321144',
     },
     {
       icon: Mail,
@@ -41,8 +41,8 @@ const Contact = () => {
     },
     {
       icon: MapPin,
-      title: 'Office Location',
-      details: '123 Industrial Zone, Construction City, Nigeria',
+      title: 'Head Office Location',
+      details: "Opp. Ebunoluwa Int'l School, Ofatedo Osogbo Osun State",
       link: '#',
     },
     {
@@ -256,7 +256,7 @@ const Contact = () => {
                 </Card.Header>
                 <Card.Content className="space-y-4">
                   <a
-                    href="tel:+2341234567890"
+                    href="tel:+2348037321144"
                     className="block w-full"
                   >
                     <Button variant="primary" className="w-full justify-center">
@@ -265,7 +265,7 @@ const Contact = () => {
                     </Button>
                   </a>
                   <a
-                    href="https://wa.me/2341234567890"
+                    href="https://wa.me/2348035841845"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block w-full"
@@ -313,26 +313,29 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="section-padding bg-muted/30">
-        <div className="container-width">
-          <SectionTitle
-            title="Visit Our Location"
-            description="Find us at our main office and manufacturing facility."
-          />
-          <Card className="p-0 overflow-hidden">
-            <div className="aspect-video bg-muted flex items-center justify-center">
-              <div className="text-center">
-                <MapPin size={48} className="text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">Interactive map would be embedded here</p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  123 Industrial Zone, Construction City, Nigeria
-                </p>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </section>
+     {/* Map Section */}
+<section className="section-padding bg-muted/30">
+  <div className="container-width">
+    <SectionTitle
+      title="Visit Our Location"
+      description="Find us at our main office and manufacturing facility."
+    />
+    <Card className="p-0 overflow-hidden">
+      <div className="aspect-video">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15812.47991115257!2d4.491084087158202!3d7.777101099999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1037876e0f0eb18f%3A0x4eb17f04a057032f!2sEbunoluwa%20International%20School%20Offatedo!5e0!3m2!1sen!2sng!4v1758373958603!5m2!1sen!2sng"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </Card>
+  </div>
+</section>
+
     </Layout>
   );
 };

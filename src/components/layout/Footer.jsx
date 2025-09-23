@@ -46,9 +46,6 @@ const Footer = () => {
                 <Facebook size={20} />
               </a>
               <a href="#" className="p-2 bg-secondary-light rounded-lg hover:bg-primary transition-colors">
-                <Linkedin size={20} />
-              </a>
-              <a href="#" className="p-2 bg-secondary-light rounded-lg hover:bg-primary transition-colors">
                 <MessageCircle size={20} />
               </a>
               <a href="#" className="p-2 bg-secondary-light rounded-lg hover:bg-primary transition-colors">
@@ -93,13 +90,13 @@ const Footer = () => {
               <div className="flex items-start space-x-3">
                 <MapPin size={20} className="text-construction mt-1 flex-shrink-0" />
                 <p className="text-secondary-light">
-                  123 Industrial Zone, Construction City, Nigeria
+                  Opp. Ebunoluwa Int'l School, Ofatedo Osogbo Osun State
                 </p>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone size={20} className="text-construction flex-shrink-0" />
                 <a href="tel:+2341234567890" className="text-secondary-light hover:text-primary-foreground transition-colors">
-                  +234 123 456 7890
+                  +234 803 732 1144
                 </a>
               </div>
               <div className="flex items-center space-x-3">
@@ -113,7 +110,7 @@ const Footer = () => {
             {/* WhatsApp Button */}
             <div className="mt-6">
               <a
-                href="https://wa.me/2341234567890"
+                href="https://wa.me/2348035841845"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
@@ -129,7 +126,7 @@ const Footer = () => {
         <div className="border-t border-secondary-light mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-secondary-light text-sm">
-              © 2024 Global Red Bricks. All rights reserved.
+              © 2025 Global Red Bricks. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-secondary-light hover:text-primary-foreground text-sm transition-colors">
