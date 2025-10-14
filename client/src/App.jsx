@@ -11,6 +11,11 @@ import WhyBricks from "./pages/WhyBricks.jsx";
 import FAQ from "./pages/FAQ.jsx";
 import Contact from "./pages/Contact.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import LoginPage from "./pages/Loginpage.jsx";
+import ProtectedRoute from "./components/routes/ProtectedRoute.jsx";
+import Forbidden from "./pages/Forbidden.jsx";
+import AdminPage from "./pages/Adminpage.jsx";
+
 
 const queryClient = new QueryClient();
 
@@ -29,6 +34,14 @@ const App = () => (
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/forbidden" element={<Forbidden />} />
+          {/* Admin route protection */}
+        <Route element={<ProtectedRoute requiredRole="admin" />}>
+          <Route path="/admin" element={<AdminPage/>} />
+        </Route>
+   
+            
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
