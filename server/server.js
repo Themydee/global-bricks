@@ -9,6 +9,8 @@ import path from "path";
 
 import projectRoutes from './routes/projectRoute.js';
 import userRoutes from './routes/userRoutes.js';
+import contactRoutes from './routes/contactRoute.js';
+import blogRoutes from './routes/blogRoutes.js';
 
 dotenv.config();
 
@@ -20,7 +22,7 @@ const __dirname = path.dirname(__filename);
 // ✅ Correct CORS setup
 app.use(
   cors({
-    origin: ["http://localhost:8080"], // your Vite frontend port
+    origin: ["http://localhost:8080"], 
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
@@ -53,6 +55,8 @@ app.get("/", (req, res) => {
 //routes
 app.use('/api/projects', projectRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/blogs', blogRoutes); 
 
 // Error handler (should come last)
 app.use((err, req, res, next) => {

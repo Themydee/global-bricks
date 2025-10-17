@@ -5,6 +5,7 @@ import Layout from '../components/layout/Layout.jsx';
 import Card from '../components/ui/Card.jsx';
 import SectionTitle from '../components/ui/SectionTitle.jsx';
 import Button from '../components/ui/Button.jsx';
+import { Link } from 'react-router-dom';
 
 const Projects = () => {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -149,9 +150,13 @@ const getCategoryIcon = (category) => {
                         </div>
                       </div>
                       
-                      <Button variant="ghost" size="sm" className="text-primary hover:text-primary-dark w-full">
-                        View Project Details
-                      </Button>
+                     <Link
+  to={`/projects/${project.id}`}
+  className="text-primary hover:text-primary-dark w-full text-center block text-sm font-medium"
+>
+  View Project Details →
+</Link>
+
                     </div>
                   </Card>
                 );

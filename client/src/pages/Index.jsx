@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { 
   Shield, 
   Flame, 
@@ -18,7 +19,12 @@ import SectionTitle from '../components/ui/SectionTitle.jsx';
 import heroImage from '../assets/hero-construction.jpg';
 import brickMachine from '../assets/brick-machine.jpg';
 
+
 const Index = () => {
+
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const advantages = [
     {
       icon: Shield,
@@ -52,26 +58,21 @@ const Index = () => {
     },
   ];
 
-  const projects = [
-    {
-      title: 'Luxury Residential Complex',
-      location: 'Lagos, Nigeria',
-      category: 'Residential',
-      image: '/api/placeholder/400/300',
-    },
-    {
-      title: 'Commercial Office Building',
-      location: 'Abuja, Nigeria',
-      category: 'Commercial',
-      image: '/api/placeholder/400/300',
-    },
-    {
-      title: 'Educational Institution',
-      location: 'Port Harcourt, Nigeria',
-      category: 'Institutional',
-      image: '/api/placeholder/400/300',
-    },
-  ];
+ useEffect(() => {
+  const fetchProjects = async () => {
+    try {
+      const res = await fetch('http://localhost:3000/api/projects'); 
+      const data = await res.json();
+      setProjects(data.projects || []);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchProjects();
+}, []); // 👈 important
 
   return (
     <Layout>
@@ -190,7 +191,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Highlight Projects */}
+   
+       {/* Featured Projects */}
       <section className="section-padding bg-muted/30">
         <div className="container-width">
           <SectionTitle
@@ -198,37 +200,45 @@ const Index = () => {
             title="Featured Projects"
             description="Discover the quality and craftsmanship of our brick construction projects across Nigeria."
           />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <Card key={project.title} variant="project" className="animate-scale-in">
-                <div className="aspect-video bg-muted rounded-t-xl flex items-center justify-center">
-                  <Building size={48} className="text-muted-foreground" />
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-construction bg-construction/10 px-3 py-1 rounded-full">
-                      {project.category}
-                    </span>
+
+          {loading ? (
+            <p className="text-center text-muted-foreground">Loading projects...</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map(project => (
+                <Card key={project.id} variant="project" className="animate-scale-in">
+                  <div className="aspect-video bg-muted rounded-t-xl flex items-center justify-center">
+{project.image ? (
+    <img
+      src={project.image.startsWith('http')
+        ? project.image
+        : `http://localhost:3000/${project.image.replace(/^\/+/, '')}`}
+      alt={project.title}
+      className="w-full h-full object-cover"
+    />
+  ) : (
+    <div className="flex items-center justify-center h-full text-muted-foreground">
+      <Building size={48} />
+    </div>
+  )}                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-construction bg-construction/10 px-3 py-1 rounded-full">
+                        {project.category}
+                      </span>
+                    </div>
+                    <Card.Title className="mb-2">{project.title}</Card.Title>
+                    <Card.Description className="mb-4">{project.location}</Card.Description>
+                    <Link to={`/projects/${project.id}`}>
+                      <Button variant="ghost" size="sm" className="text-primary hover:text-primary-dark">
+                        View Details <ArrowRight className="ml-1" size={16} />
+                      </Button>
+                    </Link>
                   </div>
-                  <Card.Title className="mb-2">{project.title}</Card.Title>
-                  <Card.Description className="mb-4">{project.location}</Card.Description>
-                  <Button variant="ghost" size="sm" className="text-primary hover:text-primary-dark">
-                    View Details <ArrowRight className="ml-1" size={16} />
-                  </Button>
-                </div>
-              </Card>
-            ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link to="/projects">
-              <Button variant="outline">
-                View All Projects
-                <ArrowRight className="ml-2" size={18} />
-              </Button>
-            </Link>
-          </div>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

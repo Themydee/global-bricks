@@ -14,6 +14,7 @@ const Navbar = () => {
     { name: 'About', path: '/about' },
     { name: 'Products', path: '/products' },
     { name: 'Projects', path: '/projects' },
+    { name: 'Blog', path: '/blog' },
     { name: 'Why Bricks?', path: '/why-bricks' },
     { name: 'FAQ', path: '/faq' },
     { name: 'Contact', path: '/contact' },

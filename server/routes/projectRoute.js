@@ -5,14 +5,17 @@ import {
   getProjectById,
   deleteProjectById,
 } from "../controllers/projectController.js";
-import { upload } from "../config/cloudinary.js";
+import { uploadProjectImage } from "../config/cloudinary.js";
 
 const router = express.Router();
 
-router.post("/", upload.single("image"), createProject);
-
+// Public routes
 router.get("/", getAllProjects);
 router.get("/:id", getProjectById);
+
+// Protected/Admin routes (you can add auth middleware later)
+router.post("/", uploadProjectImage.single("image"), createProject);
 router.delete("/:id", deleteProjectById);
+
 
 export default router;

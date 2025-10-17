@@ -15,42 +15,46 @@ const Contact = () => {
     message: '',
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('http://localhost:3000/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      const result = await response.json();
+      alert('Form submitted successfully!');
+
+      // Clear form
+      setFormData({ name: '', email: '', phone: '', company: '', projectType: '', message: '' });
+    } catch (error) {
+      console.error(error);
+      alert('Error submitting form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
-    {
-      icon: Phone,
-      title: 'Phone Number',
-      details: '+2348037321144',
-      link: 'tel:+2348037321144',
-    },
-    {
-      icon: Mail,
-      title: 'Email Address',
-      details: 'info@globalredbricks.com',
-      link: 'mailto:info@globalredbricks.com',
-    },
-    {
-      icon: MapPin,
-      title: 'Head Office Location',
-      details: "Opp. Ebunoluwa Int'l School, Ofatedo Osogbo Osun State",
-      link: '#',
-    },
-    {
-      icon: Clock,
-      title: 'Working Hours',
-      details: 'Mon - Fri: 8:00 AM - 6:00 PM\nSat: 9:00 AM - 4:00 PM',
-      link: '#',
-    },
+    { icon: Phone, title: 'Phone Number', details: '+2348037321144', link: 'tel:+2348037321144' },
+    { icon: Mail, title: 'Email Address', details: 'info@globalredbricks.com', link: 'mailto:info@globalredbricks.com' },
+    { icon: MapPin, title: 'Head Office Location', details: "Opp. Ebunoluwa Int'l School, Ofatedo Osogbo Osun State", link: '#' },
+    { icon: Clock, title: 'Working Hours', details: 'Mon - Fri: 8:00 AM - 6:00 PM\nSat: 9:00 AM - 4:00 PM', link: '#' },
   ];
 
   const projectTypes = [
@@ -80,7 +84,7 @@ const Contact = () => {
       <section className="section-padding">
         <div className="container-width">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {contactInfo.map((info, index) => (
+            {contactInfo.map((info) => (
               <Card key={info.title} variant="feature" className="text-center">
                 <Card.Content>
                   <div className="w-12 h-12 bg-gradient-brick rounded-full flex items-center justify-center mx-auto mb-4">
@@ -88,14 +92,9 @@ const Contact = () => {
                   </div>
                   <Card.Title className="text-lg mb-2">{info.title}</Card.Title>
                   {info.link.startsWith('#') ? (
-                    <Card.Description className="whitespace-pre-line">
-                      {info.details}
-                    </Card.Description>
+                    <Card.Description className="whitespace-pre-line">{info.details}</Card.Description>
                   ) : (
-                    <a
-                      href={info.link}
-                      className="text-primary hover:text-primary-dark transition-colors"
-                    >
+                    <a href={info.link} className="text-primary hover:text-primary-dark transition-colors">
                       {info.details}
                     </a>
                   )}
@@ -119,9 +118,7 @@ const Contact = () => {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium mb-2">
-                          Full Name *
-                        </label>
+                        <label htmlFor="name" className="block text-sm font-medium mb-2">Full Name *</label>
                         <div className="relative">
                           <User className="absolute left-3 top-3 text-muted-foreground" size={20} />
                           <input
@@ -137,9 +134,7 @@ const Contact = () => {
                         </div>
                       </div>
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium mb-2">
-                          Email Address *
-                        </label>
+                        <label htmlFor="email" className="block text-sm font-medium mb-2">Email Address *</label>
                         <div className="relative">
                           <Mail className="absolute left-3 top-3 text-muted-foreground" size={20} />
                           <input
@@ -158,9 +153,7 @@ const Contact = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                          Phone Number *
-                        </label>
+                        <label htmlFor="phone" className="block text-sm font-medium mb-2">Phone Number *</label>
                         <div className="relative">
                           <Phone className="absolute left-3 top-3 text-muted-foreground" size={20} />
                           <input
@@ -176,9 +169,7 @@ const Contact = () => {
                         </div>
                       </div>
                       <div>
-                        <label htmlFor="company" className="block text-sm font-medium mb-2">
-                          Company/Organization
-                        </label>
+                        <label htmlFor="company" className="block text-sm font-medium mb-2">Company/Organization</label>
                         <div className="relative">
                           <Building className="absolute left-3 top-3 text-muted-foreground" size={20} />
                           <input
@@ -195,9 +186,7 @@ const Contact = () => {
                     </div>
 
                     <div>
-                      <label htmlFor="projectType" className="block text-sm font-medium mb-2">
-                        Project Type *
-                      </label>
+                      <label htmlFor="projectType" className="block text-sm font-medium mb-2">Project Type *</label>
                       <select
                         id="projectType"
                         name="projectType"
@@ -208,17 +197,13 @@ const Contact = () => {
                       >
                         <option value="">Select project type</option>
                         {projectTypes.map((type) => (
-                          <option key={type} value={type}>
-                            {type}
-                          </option>
+                          <option key={type} value={type}>{type}</option>
                         ))}
                       </select>
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium mb-2">
-                        Project Details *
-                      </label>
+                      <label htmlFor="message" className="block text-sm font-medium mb-2">Project Details *</label>
                       <textarea
                         id="message"
                         name="message"
@@ -232,13 +217,11 @@ const Contact = () => {
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <Button type="submit" variant="primary" size="lg" className="flex-1">
+                      <Button type="submit" variant="primary" size="lg" className="flex-1" disabled={isSubmitting}>
                         <Send className="mr-2" size={20} />
-                        Send Quote Request
+                        {isSubmitting ? 'Submitting...' : 'Send Quote Request'}
                       </Button>
-                      <Button type="button" variant="outline" size="lg">
-                        Save as Draft
-                      </Button>
+                      <Button type="button" variant="outline" size="lg">Save as Draft</Button>
                     </div>
                   </form>
                 </Card.Content>
@@ -250,39 +233,17 @@ const Contact = () => {
               <Card variant="highlight">
                 <Card.Header>
                   <Card.Title>Quick Contact</Card.Title>
-                  <Card.Description>
-                    Need immediate assistance? Reach out through these channels.
-                  </Card.Description>
+                  <Card.Description>Need immediate assistance? Reach out through these channels.</Card.Description>
                 </Card.Header>
                 <Card.Content className="space-y-4">
-                  <a
-                    href="tel:+2348037321144"
-                    className="block w-full"
-                  >
-                    <Button variant="primary" className="w-full justify-center">
-                      <Phone className="mr-2" size={20} />
-                      Call Now
-                    </Button>
+                  <a href="tel:+2348037321144" className="block w-full">
+                    <Button variant="primary" className="w-full justify-center"><Phone className="mr-2" size={20} />Call Now</Button>
                   </a>
-                  <a
-                    href="https://wa.me/2348035841845"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full"
-                  >
-                    <Button variant="construction" className="w-full justify-center">
-                      <MessageCircle className="mr-2" size={20} />
-                      WhatsApp
-                    </Button>
+                  <a href="https://wa.me/2348035841845" target="_blank" rel="noopener noreferrer" className="block w-full">
+                    <Button variant="construction" className="w-full justify-center"><MessageCircle className="mr-2" size={20} />WhatsApp</Button>
                   </a>
-                  <a
-                    href="mailto:info@globalredbricks.com"
-                    className="block w-full"
-                  >
-                    <Button variant="outline" className="w-full justify-center">
-                      <Mail className="mr-2" size={20} />
-                      Send Email
-                    </Button>
+                  <a href="mailto:info@globalredbricks.com" className="block w-full">
+                    <Button variant="outline" className="w-full justify-center"><Mail className="mr-2" size={20} />Send Email</Button>
                   </a>
                 </Card.Content>
               </Card>
@@ -293,18 +254,9 @@ const Contact = () => {
                 </Card.Header>
                 <Card.Content>
                   <div className="space-y-3 text-sm">
-                    <div className="flex justify-between">
-                      <span>Quote Requests:</span>
-                      <span className="font-medium text-primary">24 hours</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>General Inquiries:</span>
-                      <span className="font-medium text-primary">4-6 hours</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Emergency Support:</span>
-                      <span className="font-medium text-primary">1 hour</span>
-                    </div>
+                    <div className="flex justify-between"><span>Quote Requests:</span><span className="font-medium text-primary">24 hours</span></div>
+                    <div className="flex justify-between"><span>General Inquiries:</span><span className="font-medium text-primary">4-6 hours</span></div>
+                    <div className="flex justify-between"><span>Emergency Support:</span><span className="font-medium text-primary">1 hour</span></div>
                   </div>
                 </Card.Content>
               </Card>
@@ -313,29 +265,25 @@ const Contact = () => {
         </div>
       </section>
 
-     {/* Map Section */}
-<section className="section-padding bg-muted/30">
-  <div className="container-width">
-    <SectionTitle
-      title="Visit Our Location"
-      description="Find us at our main office and manufacturing facility."
-    />
-    <Card className="p-0 overflow-hidden">
-      <div className="aspect-video">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15812.47991115257!2d4.491084087158202!3d7.777101099999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1037876e0f0eb18f%3A0x4eb17f04a057032f!2sEbunoluwa%20International%20School%20Offatedo!5e0!3m2!1sen!2sng!4v1758373958603!5m2!1sen!2sng"
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </div>
-    </Card>
-  </div>
-</section>
-
+      {/* Map Section */}
+      <section className="section-padding bg-muted/30">
+        <div className="container-width">
+          <SectionTitle title="Visit Our Location" description="Find us at our main office and manufacturing facility." />
+          <Card className="p-0 overflow-hidden">
+            <div className="aspect-video">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15812.47991115257!2d4.491084087158202!3d7.777101099999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1037876e0f0eb18f%3A0x4eb17f04a057032f!2sEbunoluwa%20International%20School%20Offatedo!5e0!3m2!1sen!2sng!4v1758373958603!5m2!1sen!2sng"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          </Card>
+        </div>
+      </section>
     </Layout>
   );
 };
